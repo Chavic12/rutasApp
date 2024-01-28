@@ -1,5 +1,4 @@
-import {ThunkAction} from 'redux-thunk';
-import {RootState} from '../store';
+
 import {
   loginWithEmailPassword,
   logoutFirebase,
@@ -7,7 +6,6 @@ import {
   signInWithGoogle,
 } from '../../firebase/provider';
 import {checkingCredentials, login, logout} from '.';
-import {Action, AnyAction, ThunkDispatch, UnknownAction} from '@reduxjs/toolkit';
 
 export const checkingAuthentication = (email, password) => {
   return async (dispatch) => {

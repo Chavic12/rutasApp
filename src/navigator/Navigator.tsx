@@ -1,35 +1,50 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {MapScreen} from '../pages/MapScreen';
-import {PermissionsScreen} from '../pages/PermissionsScreen';
 import {useContext} from 'react';
 import {PermissionsContext} from '../context/PermissionsContext';
 import {LoadingScreen} from '../pages/LoadingScreen';
-import {CounterScreen} from '../pages/CounterScreen';
-import {BlackButton} from '../components/BlackButton';
-import {useDispatch} from 'react-redux';
-import {decrement, increment} from '../store/counter/counterSlice';
 import {LoginScreen} from '../pages/LoginScreen';
 import {RegisterScreen} from '../pages/RegisterScreen';
+import { useCheckAuth } from '../hooks/useCheckAuth';
+import { MapScreen } from '../pages/MapScreen';
 
 const Stack = createStackNavigator();
 
 export const Navigator = () => {
+  const status = useCheckAuth();
   const {permissions} = useContext(PermissionsContext);
 
   if (permissions.locationStatus === 'unavailable') {
     return <LoadingScreen />;
   }
 
+  if(status === 'checking'){
+    return <LoadingScreen />
+  }
+
   // const dispatch = useDispatch();
 
   return (
-    <>
-      {/* <LoginScreen /> */}
-      <RegisterScreen />
-      {/* <BlackButton title="Increment" onPress={() => dispatch(increment())} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'white',
+        },
+      }}>
+        {
+          status === 'authenticated'
+          ? <Stack.Screen name="MapScreen" component={MapScreen} />
+          : <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        }
 
-      <BlackButton title="Decrement" onPress={() => dispatch(decrement())} /> */}
-    </>
+      
+    </Stack.Navigator>
+    // {/* <LoginScreen /> */}
+    // <RegisterScreen />
+    // {/* <BlackButton title="Increment" onPress={() => dispatch(increment())} />
+
+    // <BlackButton title="Decrement" onPress={() => dispatch(decrement())} /> */}
+
     // <Stack.Navigator
     //   screenOptions={{
     //     headerShown: false,

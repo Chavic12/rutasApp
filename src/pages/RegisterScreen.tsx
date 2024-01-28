@@ -9,16 +9,22 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../components/Button';
-import {useAppDispatch} from '../store/store';
+import {useAppDispatch, RootState} from '../store/store';
 import {useForm} from 'react-hook-form';
 import {CustomInput} from '../components/CustomInput';
 import {
   startCreatingUserWithEmailPassword,
   startGoogleSignIn,
 } from '../store/auth';
+import {Keyboard} from 'react-native';
+import { useSelector } from 'react-redux';
 
 export const RegisterScreen = () => {
   const [passwordShow, setPasswordShow] = useState(false);
+
+  const {status, errorMessage} = useSelector((state: RootState) => state.auth);
+  const isCheckingAuthentication = useMemo(() => status === 'checking', [status])
+
 
   const dispatch = useAppDispatch();
 
@@ -26,13 +32,11 @@ export const RegisterScreen = () => {
     control,
     handleSubmit,
     formState: {errors},
-
-    getValues,
   } = useForm();
-  console.log(getValues);
-  const formData = getValues();
+
   const onSubmit = async (data: any) => {
     console.log(data);
+    if(errors.email || errors.password || errors.phoneNumber) return;
     dispatch(
       startCreatingUserWithEmailPassword({
         email: data.email,
@@ -40,6 +44,7 @@ export const RegisterScreen = () => {
         phoneNumber: data.phoneNumber,
       }),
     );
+    Keyboard.dismiss();
   };
 
   const onGoogleSignIn = () => {
@@ -215,6 +220,7 @@ export const RegisterScreen = () => {
         <Button
           title="Sign Up"
           filled
+          loading={isCheckingAuthentication}
           onPress={handleSubmit(onSubmit)}
           style={{
             marginTop: 18,
