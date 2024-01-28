@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "515376685392",
+    "project_id": "ruta-app-a6117",
+    "storage_bucket": "ruta-app-a6117.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515376685392:android:8e7f97f924dd8c066a0c55",
+        "android_client_info": {
+          "package_name": "com.rutasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515376685392-71o5q40bkn8r7juusorlenvccdeh6r59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rutasapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "515376685392-o5s3bq6ugevbbefm3fgb21gehvauskgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe6hiaNKaZUxQdNuklSoCvGGfn8az_wRo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515376685392-o5s3bq6ugevbbefm3fgb21gehvauskgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {Navigator} from './src/navigator/Navigator';
 import {PermissionsProvider} from './src/context/PermissionsContext';
+import {Provider} from 'react-redux';
+import {store} from './src/store';
 
 const AppState = ({children}: any) => {
   return <PermissionsProvider>{children}</PermissionsProvider>;
@@ -10,11 +12,13 @@ const AppState = ({children}: any) => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <AppState>
-        <Navigator />
-      </AppState>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppState>
+          <Navigator />
+        </AppState>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
