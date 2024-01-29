@@ -1,15 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
-import { useLocation } from '../hooks/useLocation';
-import { LoadingScreen } from '../pages/LoadingScreen';
-import { Fab } from './Fab';
+import React, {useEffect, useRef, useState} from 'react';
+import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
+import {useLocation} from '../hooks/useLocation';
+import {LoadingScreen} from '../pages/LoadingScreen';
+import {Fab} from './Fab';
+import { useAppDispatch } from '../store/store';
+import { startLogout } from '../store/auth';
 
 interface Props {
   markers?: Marker[];
 }
 
-export const Map = ({ markers }: Props) => {
+export const Map = ({markers}: Props) => {
   const [showPolyline, setShowPolyline] = useState(true);
+  const dispatch = useAppDispatch()
+  const onLogout = () => {
+    dispatch(startLogout())
+}
 
   const {
     hasLocation,
@@ -36,7 +42,7 @@ export const Map = ({ markers }: Props) => {
 
   useEffect(() => {
     if (!following.current) return;
-    const { latitude, longitude } = userLocation;
+    const {latitude, longitude} = userLocation;
     mapViewRef.current?.animateCamera({
       center: {
         latitude,
@@ -46,7 +52,7 @@ export const Map = ({ markers }: Props) => {
   }, [userLocation]);
 
   const centerPosition = async () => {
-    const { latitude, longitude } = await getCurrentLocation();
+    const {latitude, longitude} = await getCurrentLocation();
     following.current = true;
 
     mapViewRef.current?.animateCamera({
@@ -67,7 +73,7 @@ export const Map = ({ markers }: Props) => {
         // provider={PROVIDER_GOOGLE}
         ref={el => (mapViewRef.current = el!)}
         showsUserLocation
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         region={{
           latitude: initialPosition.latitude,
           longitude: initialPosition.longitude,
@@ -109,6 +115,16 @@ export const Map = ({ markers }: Props) => {
           position: 'absolute',
           bottom: 80,
           right: 20,
+        }}
+      />
+      {/* PAra cerrar sesion */}
+      <Fab
+        iconName="log-out-outline"
+        onPress={onLogout}
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          left: 20,
         }}
       />
     </>

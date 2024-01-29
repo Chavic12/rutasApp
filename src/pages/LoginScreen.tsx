@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import {RootState, useAppDispatch} from '../store/store';
 import {KeyboardAvoidingView} from 'react-native';
 import {Platform} from 'react-native';
-import {startLoginWithEmailPassword,startCreatingUserWithEmailPassword} from '../store/auth';
+import {startLoginWithEmailPassword,startCreatingUserWithEmailPassword, startGoogleSignIn} from '../store/auth';
 import {useForm} from 'react-hook-form';
 import {CustomInput} from '../components/CustomInput';
 
@@ -42,6 +42,12 @@ export const LoginScreen = () => {
     );
     Keyboard.dismiss();
   };
+
+  const onGoogleSignIn = () => {
+    dispatch(startGoogleSignIn());
+    console.log('Google Sign In');
+  };
+
 
   return (
     <KeyboardAvoidingView
@@ -211,7 +217,7 @@ export const LoginScreen = () => {
               justifyContent: 'center',
             }}>
             <TouchableOpacity
-              onPress={() => console.log('Sign Up')}
+              onPress={onGoogleSignIn}
               style={{
                 flex: 1,
                 flexDirection: 'row',
