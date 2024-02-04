@@ -6,6 +6,7 @@ import {LoginScreen} from '../pages/LoginScreen';
 import {RegisterScreen} from '../pages/RegisterScreen';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { MapScreen } from '../pages/MapScreen';
+import { PermissionsScreen } from '../pages/PermissionsScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,8 @@ export const Navigator = () => {
   if (permissions.locationStatus === 'unavailable') {
     return <LoadingScreen />;
   }
+
+  console.log(permissions.locationStatus)
 
   if(status === 'checking'){
     return <LoadingScreen />
@@ -30,33 +33,19 @@ export const Navigator = () => {
         cardStyle: {
           backgroundColor: 'white',
         },
-      }}>
-        {
-          status === 'authenticated'
-          ? <Stack.Screen name="MapScreen" component={MapScreen} />
-          : <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        }
-
-      
+      }}
+    >
+      {status === 'authenticated' ? (
+        permissions.locationStatus === 'granted' ? (
+          <Stack.Screen name="MapScreen" component={MapScreen} />
+        ) : (
+          <Stack.Screen name="PermissionScreen" component={PermissionsScreen} />
+        )
+      ) : (
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      )}
+      {/* Para la página de registro */}
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
     </Stack.Navigator>
-    // {/* <LoginScreen /> */}
-    // <RegisterScreen />
-    // {/* <BlackButton title="Increment" onPress={() => dispatch(increment())} />
-
-    // <BlackButton title="Decrement" onPress={() => dispatch(decrement())} /> */}
-
-    // <Stack.Navigator
-    //   screenOptions={{
-    //     headerShown: false,
-    //     cardStyle: {
-    //       backgroundColor: 'white',
-    //     },
-    //   }}>
-    //   {permissions.locationStatus === 'granted' ? (
-    //     <Stack.Screen name="MapScreen" component={MapScreen} />
-    //   ) : (
-    //     <Stack.Screen name="PermissionScreen" component={PermissionsScreen} />
-    //   )}
-    // </Stack.Navigator>
   );
 };

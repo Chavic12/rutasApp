@@ -1,4 +1,4 @@
-package com.rutasapp
+package com.xavierchavez.rutasapp
 
 import android.app.Application
 import com.facebook.react.PackageList

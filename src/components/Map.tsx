@@ -5,6 +5,8 @@ import {LoadingScreen} from '../pages/LoadingScreen';
 import {Fab} from './Fab';
 import { useAppDispatch } from '../store/store';
 import { startLogout } from '../store/auth';
+import { StartRoute } from './StartRoute';
+import { StopRoute } from './StopRoute';
 
 interface Props {
   markers?: Marker[];
@@ -89,34 +91,9 @@ export const Map = ({markers}: Props) => {
           />
         )}
 
-        {/* <Marker
-            image={require('../assets/custom-marker.png')}
-            coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-            }}
-            title="Esto es un titulo"
-            description="Esto es una descripcion del maracodr"
-        /> */}
       </MapView>
-      <Fab
-        iconName="compass-outline"
-        onPress={centerPosition}
-        style={{
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-        }}
-      />
-      <Fab
-        iconName="brush-outline"
-        onPress={() => setShowPolyline(!showPolyline)}
-        style={{
-          position: 'absolute',
-          bottom: 80,
-          right: 20,
-        }}
-      />
+      {/* <StartRoute />
+      <StopRoute /> */}
       {/* PAra cerrar sesion */}
       <Fab
         iconName="log-out-outline"
@@ -127,6 +104,9 @@ export const Map = ({markers}: Props) => {
           left: 20,
         }}
       />
+      {/* Icono para detener una ruta */}
+      
+      
     </>
   );
 };

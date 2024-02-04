@@ -81,9 +81,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.rutasapp"
+    namespace "com.xavierchavez.rutasapp"
     defaultConfig {
-        applicationId "com.rutasapp"
+        applicationId "com.xavierchavez.rutasapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

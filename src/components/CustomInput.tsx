@@ -30,6 +30,7 @@ export const CustomInput = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              style={{color: 'black', flex: 1}}
               placeholder={placeholder}
               secureTextEntry={secureTextEntry}
             />

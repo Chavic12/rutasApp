@@ -19,7 +19,8 @@ import {
 import {Keyboard} from 'react-native';
 import { useSelector } from 'react-redux';
 
-export const RegisterScreen = () => {
+
+export const RegisterScreen =  ({navigation}: {navigation: any}) => {
   const [passwordShow, setPasswordShow] = useState(false);
 
   const {status, errorMessage} = useSelector((state: RootState) => state.auth);
@@ -237,7 +238,7 @@ export const RegisterScreen = () => {
             style={{
               flex: 1,
               height: 1,
-              backgroundColor: COLORS.grey,
+              backgroundColor: COLORS.black,
               marginHorizontal: 10,
             }}
           />
@@ -291,7 +292,7 @@ export const RegisterScreen = () => {
             }}>
             Already have an account?
           </Text>
-          <Pressable onPress={onSubmit}>
+          <Pressable onPress={() => navigation.navigate('LoginScreen')}>
             <Text
               style={{
                 fontSize: 16,
@@ -299,7 +300,7 @@ export const RegisterScreen = () => {
                 color: COLORS.black,
                 marginLeft: 6,
               }}>
-              Sign In
+              Inicia sesión
             </Text>
           </Pressable>
         </View>

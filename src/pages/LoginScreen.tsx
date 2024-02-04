@@ -15,11 +15,12 @@ import {useSelector} from 'react-redux';
 import {RootState, useAppDispatch} from '../store/store';
 import {KeyboardAvoidingView} from 'react-native';
 import {Platform} from 'react-native';
-import {startLoginWithEmailPassword,startCreatingUserWithEmailPassword, startGoogleSignIn} from '../store/auth';
+import {startLoginWithEmailPassword, startGoogleSignIn} from '../store/auth';
 import {useForm} from 'react-hook-form';
 import {CustomInput} from '../components/CustomInput';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}: {navigation: any}) => {
+
   const [passwordShow, setPasswordShow] = useState(false);
   const dispatch = useAppDispatch();
   const {status, errorMessage} = useSelector((state: RootState) => state.auth);
@@ -245,7 +246,7 @@ export const LoginScreen = () => {
               }}>
               No tienes una cuenta?
             </Text>
-            <Pressable onPress={() => console.log('Sign Up')}>
+            <Pressable onPress={() => navigation.navigate('RegisterScreen')}>
               <Text
                 style={{
                   fontSize: 16,
