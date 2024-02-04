@@ -3,10 +3,10 @@ import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import {useLocation} from '../hooks/useLocation';
 import {LoadingScreen} from '../pages/LoadingScreen';
 import {Fab} from './Fab';
-import { useAppDispatch } from '../store/store';
-import { startLogout } from '../store/auth';
-import { StartRoute } from './StartRoute';
-import { StopRoute } from './StopRoute';
+import {useAppDispatch} from '../store/store';
+import {startLogout} from '../store/auth';
+import {StartRoute} from './StartRoute';
+import {StopRoute} from './StopRoute';
 
 interface Props {
   markers?: Marker[];
@@ -14,11 +14,13 @@ interface Props {
 
 export const Map = ({markers}: Props) => {
   const [showPolyline, setShowPolyline] = useState(true);
-  const dispatch = useAppDispatch()
-  const onLogout = () => {
-    dispatch(startLogout())
-}
+  const [isTracking, setIsTracking] = useState(false); // Estado para controlar el seguimiento
 
+  const dispatch = useAppDispatch();
+  const onLogout = () => {
+    dispatch(startLogout());
+  };
+ 
   const {
     hasLocation,
     initialPosition,
@@ -35,16 +37,23 @@ export const Map = ({markers}: Props) => {
   // Marcador
 
   useEffect(() => {
-    followUserLocation();
+    if(!isTracking) {
+      followUserLocation();
+    } else {
+      stopFollowUserLocation();
+    }
+    
     return () => {
       // cleanup
       stopFollowUserLocation();
     };
-  }, []);
+  }, [isTracking]);
 
   useEffect(() => {
     if (!following.current) return;
     const {latitude, longitude} = userLocation;
+    console.log("Rutas:", routeLines);
+
     mapViewRef.current?.animateCamera({
       center: {
         latitude,
@@ -64,6 +73,11 @@ export const Map = ({markers}: Props) => {
       },
     });
   };
+
+  const toggleTracking = () => {
+    setIsTracking((prev) => !prev);
+  };
+
 
   if (!hasLocation) {
     return <LoadingScreen />;
@@ -90,10 +104,17 @@ export const Map = ({markers}: Props) => {
             strokeWidth={3}
           />
         )}
-
       </MapView>
-      {/* <StartRoute />
-      <StopRoute /> */}
+      <Fab
+        iconName={isTracking ? "ban-outline" : "play-outline"}
+        onPress={toggleTracking}
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+        }}
+      />
+      
       {/* PAra cerrar sesion */}
       <Fab
         iconName="log-out-outline"
@@ -105,8 +126,6 @@ export const Map = ({markers}: Props) => {
         }}
       />
       {/* Icono para detener una ruta */}
-      
-      
     </>
   );
 };
